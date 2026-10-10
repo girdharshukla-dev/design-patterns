@@ -7,9 +7,13 @@ public class Connection {
     private static Connection connection;
     private static Connection eagerConnection = new Connection();
 
-    private Connection(){}
+    private Connection(){
+        if(connection != null){
+            throw new RuntimeException("trying to break singleton pattern"); // this prevents breaking of the pattern by reflection
+        }
+    }
 
-    // lazy approach --> problematic in multi threading
+    // lazy approach --> problematic in multi threading without synchornization
     public static Connection getConnectionLazily(){
         if(connection == null){
             System.out.println("Connection object created");
